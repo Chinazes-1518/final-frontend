@@ -30,6 +30,7 @@ async function setLink() {
 
   if (data.status === 200) {
     await getMap()
+    await getCoords()
   }
 }
 
@@ -38,6 +39,12 @@ async function getCoords() {
   if (data.status === 200) {
     listener.value = data.json.listener
     sender.value = data.json.sender
+  }
+}
+
+function coords(t) {
+  if (t == 'listener') {
+    return `top: \`calc((${listener.value[1]}px) * 2)\`, left: \`calc((100px - 127px) * 2)`
   }
 }
 
@@ -66,7 +73,7 @@ onBeforeMount(async () => {
 <!--      <div class="base blue" :style="{top: `calc((100px - 63px) * 2)`, left: `calc((100px - 63px) * 2)` }">-->
 <!--        <div class="base-body blue"></div>-->
 <!--      </div>-->
-      <div class="base blue"></div>
+<!--      <div class="base blue" :style="coords('listener')"></div>-->
       <div class="rows" v-for="i in list">
         <div class="row" v-for="j in i">
           <div class="pixel" :style="{background: getColor(j)}">
